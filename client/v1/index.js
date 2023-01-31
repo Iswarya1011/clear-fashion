@@ -77,10 +77,11 @@ console.log(brand.size);
 // 2. Create a variable and assign it the list of products by price from lowest to highest
 // 3. Log the variable
 
-function sort(){
+const sortprice= marketplace.sort(function(a, b) {
+  return parseFloat(a.price) - parseFloat(b.price);
+});
 
-
-}
+console.log(sortprice);
 
 // 🎯 TODO 5: Sort by date
 // 1. Create a function to sort the marketplace objects by products date
