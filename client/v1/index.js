@@ -72,6 +72,8 @@ console.log(brand.size);
 
 
 
+
+
 // 🎯 TODO 4: Sort by price
 // 1. Create a function to sort the marketplace products by price
 // 2. Create a variable and assign it the list of products by price from lowest to highest
