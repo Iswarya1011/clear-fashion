@@ -21,6 +21,8 @@ const MY_FAVORITE_BRANDS = [
 
 console.table(MY_FAVORITE_BRANDS);
 console.log(MY_FAVORITE_BRANDS[0]);
+console.log("Bonjour");
+
 
 /**
  * 🌱
@@ -35,6 +37,9 @@ console.log(MY_FAVORITE_BRANDS[0]);
 // I can find on these e-shops
 // 2. Log the variable
 
+const url ='https://www.faguo-store.com/fr/vetements/7606-arcy-t-shirt-en-coton-recycle-kaki.html';
+console.log(url);
+
 /**
  * 👕
  * Easy 😁?
@@ -48,6 +53,7 @@ console.log(MY_FAVORITE_BRANDS[0]);
 // 1. Create a variable and assign it the number of products
 // 2. Log the variable
 
+const number_product=marketplace.length
 // 🎯 TODO 3: Brands name
 // 1. Create a variable and assign it the list of brands name only
 // 2. Log the variable
