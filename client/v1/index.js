@@ -177,10 +177,12 @@ for( var i in brands){
 
 
 // 1. For each brand, sort the products by price, from highest to lowest
-
+function SortPrices(a, b) {
+  return  parseFloat(b.price)-parseFloat(a.price) ;
+}
 for(i in brands){
 
-  console.table(brands[i].sort(SortPrice));
+  console.table(brands[i].sort(SortPrices));
 }
 
 // 2. Log the sort
@@ -190,7 +192,17 @@ for(i in brands){
 
 // 🎯 TODO 10: Sort by date for each brand
 // 1. For each brand, sort the products by date, from old to recent
+function SortDates(a, b) {
+  return  new Date(a.released)-new Date(b.released); 
+}
+
+for(i in brands){
+
+  console.table(brands[i].sort(SortDates));
+}
 // 2. Log the sort
+
+
 
 /**
  * 💶
@@ -201,6 +213,14 @@ for(i in brands){
 
 // 🎯 TODO 11: Compute the p90 price value
 // 1. Compute the p90 price value of each brand
+const per90=[];
+for(i in brands){
+
+  per90.push(((brands[i].length)-1) *0.9);
+
+}
+
+console.log(per90);
 // The p90 value (90th percentile) is the lower value expected to be exceeded in 90% of the products
 
 /**
