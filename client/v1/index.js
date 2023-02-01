@@ -157,12 +157,11 @@ for(var i in name_brand){
 
   brands[name_brand[i]]=new Array();
   
-  
 }
 
 for(var j in marketplace){
 
-  brands[marketplace[j]["brand"]].push([marketplace[j]["link"],marketplace[j]["brand"],marketplace[j]["price"],marketplace[j]["name"],marketplace[j]["photo"],,marketplace[j]["uuid"],,marketplace[j]["released"]]);
+  brands[marketplace[j]["brand"]].push(marketplace[j]);
 }
 
   
@@ -175,8 +174,19 @@ for( var i in brands){
   console.log(brands[i], brands[i].length);
 }
 // 🎯 TODO 9: Sort by price for each brand
+
+
 // 1. For each brand, sort the products by price, from highest to lowest
+
+for(i in brands){
+
+  console.table(brands[i].sort(SortPrice));
+}
+
 // 2. Log the sort
+
+
+
 
 // 🎯 TODO 10: Sort by date for each brand
 // 1. For each brand, sort the products by date, from old to recent
