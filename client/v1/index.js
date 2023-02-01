@@ -114,9 +114,9 @@ console.table(pricefilter);
 
 
 var prices = [] ;
-for(var product_id in marketplace){
+for(var i in marketplace){
 
-  prices.push(marketplace[product_id].price)
+  prices.push(marketplace[i].price)
 };
 
 const sum =prices.reduce((a,b) =>a+b,0);
@@ -147,10 +147,33 @@ console.log(avgprice)
 //   ....
 //   'brand-name-n': [{...}, {...}, ..., {...}],
 // };
-//
+
+
+const brands ={};
+
+const name_brand=Array.from(brand)
+
+for(var i in name_brand){
+
+  brands[name_brand[i]]=new Array();
+  
+  
+}
+
+for(var j in marketplace){
+
+  brands[marketplace[j]["brand"]].push([marketplace[j]["link"],marketplace[j]["brand"],marketplace[j]["price"],marketplace[j]["name"],marketplace[j]["photo"],,marketplace[j]["uuid"],,marketplace[j]["released"]]);
+}
+
+  
 // 2. Log the variable
+console.log(brands);
 // 3. Log the number of products by brands
 
+for( var i in brands){
+
+  console.log(brands[i], brands[i].length);
+}
 // 🎯 TODO 9: Sort by price for each brand
 // 1. For each brand, sort the products by price, from highest to lowest
 // 2. Log the sort
