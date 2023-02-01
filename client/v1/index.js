@@ -83,8 +83,7 @@ function SortPrice(a, b) {
 const sortprice= marketplace.sort(SortPrice);
 // 3. Log the variable
 
-
-
+//Console.log(sortprice);
 console.table(sortprice);
 
 // 🎯 TODO 5: Sort by date
@@ -97,17 +96,35 @@ function SortDate(a, b) {
 const sortdate= marketplace.sort(SortDate);
 // 3. Log the variable
 
+// Console.log(sortdate);
 console.table(sortdate);
 
 // 🎯 TODO 6: Filter a specific price range
 // 1. Filter the list of products between 50€ and 100€
+const pricefilter =marketplace.filter(function(x){ return x.price >= 50  && x.price <= 100});
 // 2. Log the list
+console.table(pricefilter);
+
+
 
 
 
 // 🎯 TODO 7: Average price
 // 1. Determine the average price of the marketplace
+
+
+var prices = [] ;
+for(var product_id in marketplace){
+
+  prices.push(marketplace[product_id].price)
+};
+
+const sum =prices.reduce((a,b) =>a+b,0);
+const avgprice=(sum/prices.length) ;
+
+
 // 2. Log the average
+console.log(avgprice)
 
 
 
