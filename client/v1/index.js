@@ -420,7 +420,7 @@ var a =true;
 var today=Date.now();
 for(var i in COTELE_PARIS){
 
-  if((new Date(today)- new Date (COTELE_PARIS[0].released)) / (1000 * 3600 * 24)> 14){
+  if((new Date(today)- new Date (COTELE_PARIS[i].released)) / (1000 * 3600 * 24)> 14){
     
     a=false;
   }
@@ -435,21 +435,44 @@ console.log("Only new products ?", a);
 var b =true;
 for(var i in COTELE_PARIS){
 
-  if(COTELE_PARIS[0].price > 100){
+  if(COTELE_PARIS[i].price > 100){
     
-    a=false;
+    b=false;
   }
 
 }
-console.log("Coteleparis is a reasonable price shop ?", a);
+console.log("Coteleparis is a reasonable price shop ?", b);
 
 // 🎯 TODO 3: Find a specific product
 // 1. Find the product with the uuid `2b9a47e3-ed73-52f6-8b91-379e9c8e526c`
 // 2. Log the product
+for(var i in COTELE_PARIS){
+
+  if(COTELE_PARIS[i].uuid ==`2b9a47e3-ed73-52f6-8b91-379e9c8e526c`){
+    
+    console.log(COTELE_PARIS[i]);
+    
+  }
+
+}
 
 // 🎯 TODO 4: Delete a specific product
 // 1. Delete the product with the uuid `2b9a47e3-ed73-52f6-8b91-379e9c8e526c`
 // 2. Log the new list of product
+
+for(var i in COTELE_PARIS){
+
+  if(COTELE_PARIS[i].uuid ==`2b9a47e3-ed73-52f6-8b91-379e9c8e526c`){
+    
+    delete COTELE_PARIS[i];
+    
+  }
+
+}
+console.log(COTELE_PARIS);
+
+console.table(COTELE_PARIS);
+
 
 // 🎯 TODO 5: Save the favorite product
 // We declare and assign a variable called `blueJacket`
