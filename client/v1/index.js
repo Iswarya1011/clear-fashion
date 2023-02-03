@@ -495,7 +495,18 @@ let jacket = blueJacket;
 jacket.favorite = true;
 
 // 1. Log `blueJacket` and `jacket` variables
+
+
+console.log("blueJacket",blueJacket);
+
+console.log("Jacket",jacket);
+
+console.log("blueJacket",blueJacket.favorite);
+
+console.log("Jacket",jacket.favorite);
+
 // 2. What do you notice?
+// We can notice that they are the same product and that favorite (the property ) is equal to True.
 
 // we make a new assignment again
 blueJacket = {
@@ -511,6 +522,13 @@ blueJacket = {
 };
 
 // 3. Update `jacket` property with `favorite` to true WITHOUT changing blueJacket properties
+
+let Jacket = Object.create(blueJacket);
+Jacket.favorite = true;
+
+console.log("blueJacket",blueJacket.favorite);
+
+console.log("Jacket",Jacket.favorite);
 
 /**
  * 🎬
