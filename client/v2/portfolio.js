@@ -24,6 +24,7 @@ let currentPagination = {};
 // instantiate the selectors
 const selectShow = document.querySelector('#show-select');
 const selectPage = document.querySelector('#page-select');
+const selectBrand = document.querySelector('#brand-select');
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
 
@@ -61,6 +62,30 @@ const fetchProducts = async (page = 1, size = 12) => {
     return {currentProducts, currentPagination};
   }
 };
+
+/**
+ * Fetch brands from api
+ * @return {Object}
+ */
+const fetchbrand= async () => {
+  try {
+    const response = await fetch(
+      `https://clear-fashion-api.vercel.app/brand`
+    );
+    const body = await response.json();
+
+    if (body.success !== true) {
+      console.error(body);
+      return {currentProducts, currentPagination};
+    }
+
+    return body.data;
+  } catch (error) {
+    console.error(error);
+    return {currentProducts, currentPagination};
+  }
+};
+
 
 /**
  * Render list of products
@@ -102,6 +127,8 @@ const renderPagination = pagination => {
   selectPage.selectedIndex = currentPage - 1;
 };
 
+
+
 /**
  * Render page selector
  * @param  {Object} pagination
@@ -132,9 +159,67 @@ selectShow.addEventListener('change', async (event) => {
   render(currentProducts, currentPagination);
 });
 
+
+/**
+ * Select the pages to display (Feature 1)
+ */
+selectPage.addEventListener('change', async (event) => {
+  
+  const products = await fetchProducts( parseInt(event.target.value),currentPagination.pageSize);
+
+  setCurrentProducts(products);
+  render(currentProducts, currentPagination);
+});
+
+
+
+/**
+ * Filter by brand name (Feature 2)
+ */
+
+
+
+
+
+
+/**
+ * Render page selector
+ * @param  {Object} brand
+ * @param  {Array} products
+ */
+const renderBrands = pagination => {
+  const {currentPage, pageCount} = pagination;
+  const options = Array.from(
+    {'length': pageCount},
+    (value, index) => `<option value="${index + 1}">${index + 1}</option>`
+  ).join('');
+
+  selectPage.innerHTML = options;
+  selectPage.selectedIndex = currentPage - 1;
+}
+
+
+
+
+
+selectBrand.addEventListener('change', async (event) => {
+  const products = await fetchbrandProducts();
+
+  console.log(products);
+
+  //setCurrentProducts(products);
+  //render(currentProducts, currentPagination);
+});
+
 document.addEventListener('DOMContentLoaded', async () => {
   const products = await fetchProducts();
 
   setCurrentProducts(products);
   render(currentProducts, currentPagination);
 });
+
+
+
+
+
+
