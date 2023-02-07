@@ -187,11 +187,11 @@ selectPage.addEventListener('change', async (event) => {
  * @param  {Object} brand
  * @param  {Array} products
  */
-const renderBrands = pagination => {
+const renderBrands = brand => {
   const {currentPage, pageCount} = pagination;
   const options = Array.from(
     {'length': pageCount},
-    (value, index) => `<option value="${index + 1}">${index + 1}</option>`
+    (value, brand) => `<option value="${product.brand}">${index + 1}</option>`
   ).join('');
 
   selectPage.innerHTML = options;
