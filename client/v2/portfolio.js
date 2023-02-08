@@ -207,11 +207,14 @@ selectPage.addEventListener('change', async (event) => {
   render(currentProducts, currentPagination);
 });
 
-
+/**
+ * Filter by brand (Feature 2)
+ */
 selectBrand.addEventListener('change', async (event) => {
   
-  const products = await fetchProducts(currentPagination.currentPage,currentPagination.pageSize);
+  const products = await fetchProducts(currentPagination.currentPage,currentPagination.count);
   products.result = bybrand(products.result);
+  console.log(products);
 
   setCurrentProducts(products);
   render(currentProducts, currentPagination);
@@ -222,6 +225,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const products = await fetchProducts();
  
   const brands = await fetchbrand();
+
+  brands.result.unshift("Tous les produits");
 
   setCurrentProducts(products);
   setCurrentBrand(brands);
