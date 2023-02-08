@@ -20,6 +20,8 @@ Search for available brands list
 // current products on the page
 let currentProducts = [];
 let currentPagination = {};
+let currentBrands = [];
+
 
 // instantiate the selectors
 const selectShow = document.querySelector('#show-select');
@@ -63,26 +65,36 @@ const fetchProducts = async (page = 1, size = 12) => {
   }
 };
 
+
+/**
+ * Set global value
+ * @param {Array} result - products to display
+ * 
+ */
+const setCurrentBrand = (result) => {
+  currentBrands = result;
+}
+
 /**
  * Fetch brands from api
- * @return {Object}
+ * @return {Object} 
  */
 const fetchbrand= async () => {
   try {
     const response = await fetch(
-      `https://clear-fashion-api.vercel.app/brand`
+      `https://clear-fashion-api.vercel.app/brands`
     );
     const body = await response.json();
 
     if (body.success !== true) {
       console.error(body);
-      return {currentProducts, currentPagination};
+      return currentBrands;
     }
 
     return body.data;
   } catch (error) {
     console.error(error);
-    return {currentProducts, currentPagination};
+    return currentBrands;
   }
 };
 
@@ -177,38 +189,26 @@ selectPage.addEventListener('change', async (event) => {
  * Filter by brand name (Feature 2)
  */
 
-
-
-
-
-
-
 const renderBrands = brand => {
   
-  const options = Array.from(brand.result, i =>`<option value="${i}">${i}</option>`);
-  selectPage.innerHTML = options;
-  selectPage.selectedIndex = brand.length - 1;
+  const b=brand.result;
+  const options = Array.from(b, i =>`<option value="${i}">${i}</option>`);
+  selectBrand.innerHTML = options;
+  
 }
 
 
-
-
-
-selectBrand.addEventListener('change', async (event) => {
-  const products = await fetchbrandProducts();
-
-  console.log(products);
-
-  setCurrentProducts(products);
-  render(currentProducts, currentPagination);
-});
-
 document.addEventListener('DOMContentLoaded', async () => {
   const products = await fetchProducts();
+  const brands = await fetchbrand();
 
   setCurrentProducts(products);
+  setCurrentBrand(brands);
+
+  renderBrands(brands);
   render(currentProducts, currentPagination);
-  renderBrands();
+  
+ ;
 });
 
 
