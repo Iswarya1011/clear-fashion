@@ -151,6 +151,20 @@ const renderIndicators = pagination => {
   spanNbProducts.innerHTML = count;
 };
 
+/**
+ * Filter by brand name (Feature 2)
+ */
+
+const renderBrands = brand => {
+  
+  const b=brand.result;
+  const options = Array.from(b, i =>`<option value="${i}">${i}</option>`);
+  selectBrand.innerHTML = options;
+  
+}
+
+
+
 const render = (products, pagination) => {
   renderProducts(products);
   renderPagination(pagination);
@@ -184,22 +198,34 @@ selectPage.addEventListener('change', async (event) => {
 });
 
 
-
 /**
- * Filter by brand name (Feature 2)
+ * Filter by brand
+ * 
  */
 
-const renderBrands = brand => {
+
+const bybrand = products =>{
   
-  const b=brand.result;
-  const options = Array.from(b, i =>`<option value="${i}">${i}</option>`);
-  selectBrand.innerHTML = options;
-  
+  const result = products.filter(product => product.brand == selectBrand.value);
+  return result;
 }
+
+
+
+selectBrand.addEventListener('change', async (event) => {
+  
+  const brand = await fetchbrand();
+  const products = await fetchProducts(currentPagination.currentPage,currentPagination.pageSize);
+  const result=bybrand(currentProducts);
+  setCurrentBrand(brand);
+  setCurrentProducts(result);
+  render(currentProducts, currentPagination);
+});
 
 
 document.addEventListener('DOMContentLoaded', async () => {
   const products = await fetchProducts();
+ 
   const brands = await fetchbrand();
 
   setCurrentProducts(products);
