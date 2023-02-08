@@ -179,6 +179,7 @@ const bybrand = products =>{
   
   const result = products.filter(product => product.brand == selectBrand.value);
   return result;
+}
 
 /**
  * Declaration of all Listeners
