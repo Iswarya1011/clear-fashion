@@ -153,8 +153,8 @@ const renderIndicators = pagination => {
 
 /**
  * Filter by brand name (Feature 2)
+ *@param  {Array} brand
  */
-
 const renderBrands = brand => {
   
   const b=brand.result;
@@ -170,6 +170,15 @@ const render = (products, pagination) => {
   renderPagination(pagination);
   renderIndicators(pagination);
 };
+
+/**
+ * Filter by brand
+ * @param  {Object} products
+ */
+const bybrand = products =>{
+  
+  const result = products.filter(product => product.brand == selectBrand.value);
+  return result;
 
 /**
  * Declaration of all Listeners
@@ -198,27 +207,12 @@ selectPage.addEventListener('change', async (event) => {
 });
 
 
-/**
- * Filter by brand
- * 
- */
-
-
-const bybrand = products =>{
-  
-  const result = products.filter(product => product.brand == selectBrand.value);
-  return result;
-}
-
-
-
 selectBrand.addEventListener('change', async (event) => {
   
-  const brand = await fetchbrand();
   const products = await fetchProducts(currentPagination.currentPage,currentPagination.pageSize);
-  const result=bybrand(currentProducts);
-  setCurrentBrand(brand);
-  setCurrentProducts(result);
+  products.result = bybrand(products.result);
+
+  setCurrentProducts(products);
   render(currentProducts, currentPagination);
 });
 
