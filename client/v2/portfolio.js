@@ -182,20 +182,12 @@ selectPage.addEventListener('change', async (event) => {
 
 
 
-/**
- * Render page selector
- * @param  {Object} brand
- * @param  {Array} products
- */
-const renderBrands = brand => {
-  const {currentPage, pageCount} = pagination;
-  const options = Array.from(
-    {'length': pageCount},
-    (value, brand) => `<option value="${product.brand}">${index + 1}</option>`
-  ).join('');
 
+const renderBrands = brand => {
+  
+  const options = Array.from(brand.result, i =>`<option value="${i}">${i}</option>`);
   selectPage.innerHTML = options;
-  selectPage.selectedIndex = currentPage - 1;
+  selectPage.selectedIndex = brand.length - 1;
 }
 
 
@@ -207,8 +199,8 @@ selectBrand.addEventListener('change', async (event) => {
 
   console.log(products);
 
-  //setCurrentProducts(products);
-  //render(currentProducts, currentPagination);
+  setCurrentProducts(products);
+  render(currentProducts, currentPagination);
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -216,6 +208,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   setCurrentProducts(products);
   render(currentProducts, currentPagination);
+  renderBrands();
 });
 
 
