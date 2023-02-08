@@ -21,6 +21,16 @@ Search for available brands list
 let currentProducts = [];
 let currentPagination = {};
 let currentBrands = [];
+let allproduct=[];
+
+// indicators 
+
+var newprod;
+var Newdate;
+const p50=[];
+const p90=[];
+const p95=[];
+
 
 
 // instantiate the selectors
@@ -28,8 +38,16 @@ const selectShow = document.querySelector('#show-select');
 const selectPage = document.querySelector('#page-select');
 const selectBrand = document.querySelector('#brand-select');
 const selectRecent= document.querySelector('#recently-released');
+const selectReasonable= document.querySelector('#reasonable-price');
+const selectSort=document.querySelector('#sort-select')
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
+const spanbrands=document.querySelector('#nbBrands');
+const spanP50=document.querySelector('#p50');
+const spanP90=document.querySelector('#p90');
+const spanP95=document.querySelector('#p95');
+const spanRelease=document.querySelector('#releaseDate');
+const spanNbNewProducts = document.querySelector('#nbNewProducts');
 
 /**
  * Set global value
@@ -152,10 +170,12 @@ const renderIndicators = pagination => {
   const {count} = pagination;
 
   spanNbProducts.innerHTML = count;
-};
+  
+}
+  
 
 /**
- * Filter by brand name (Feature 2)
+ * Render brand name (Feature 2)
  *@param  {Array} brand
  */
 const renderBrands = brand => {
@@ -163,8 +183,25 @@ const renderBrands = brand => {
   const b=brand.result;
   const options = Array.from(b, i =>`<option value="${i}">${i}</option>`);
   selectBrand.innerHTML = options;
+  spanbrands.innerHTML= (options.length) -1;
   
 }
+
+/**
+ * Render number of new product (Feature 8)
+ *@param  {Array} products
+ */
+ const renderNewProduct = products => {
+
+  
+  spanNbNewProducts.innerHTML=newprod;
+  spanRelease.innerHTML=Newdate;
+  spanP50.innerHTML=p50;
+  spanP90.innerHTML=p90;
+  spanP95.innerHTML=p95;
+  
+}
+
 
 
 
@@ -172,6 +209,8 @@ const render = (products, pagination) => {
   renderProducts(products);
   renderPagination(pagination);
   renderIndicators(pagination);
+  renderNewProduct(products);
+ 
 };
 
 /**
@@ -186,19 +225,107 @@ const bybrand = products =>{
 
 
 /**
- * Sort by date
+ * Filter by date (recent)
  * @param  {Object} products
  */
 
-const bydate= products =>{
+const Filterbydate= products =>{
 
   const result=products.filter(product=> (((new Date()- new Date (product.released)) / (1000 * 3600 * 24 )) <30) );
+
+  newprod=result.length
+ 
+  return result;
+
+}
+
+/**
+ * Filter by price (50€)
+ * @param  {Object} products
+ */
+
+const Filterbyprice= products =>{
+
+  const result=products.filter(product=>  ((product.price) < 50) );
  
   return result;
 
 }
 
 
+/**
+ * Sort by price asc
+ * @param  {Object} products
+ */
+
+const SortPricesA= products =>{
+
+  const result=products.sort((a,b)=> (parseFloat(a.price)-parseFloat(b.price)) );
+   p50=quantile(result.price,0.5);
+   p90=quantile(result.price,0.9);
+   p95=quantile(result.price,0.95);
+ 
+  return result;
+
+}
+/**
+ * Sort by price desc
+ * @param  {Object} products
+ */
+
+const SortPricesD= products =>{
+
+  const result=products.sort((a,b)=> (parseFloat(b.price)-parseFloat(a.price)) );
+   p50=quantile(result.price,0.5);
+   p90=quantile(result.price,0.9);
+   p95=quantile(result.price,0.95);
+ 
+  return result;
+
+}
+
+/**
+ * Sort by date Recent
+ * @param  {Object} products
+ */
+
+const SortDateR= products =>{
+
+  const result=products.sort((a,b)=> (new Date(b.released)-new Date(a.released)) );
+
+  Newdate=result[0].released;
+ 
+  return result;
+
+}
+/**
+ * Sort by date old
+ * @param  {Object} products
+ */
+
+const SortDateO= products =>{
+
+  const result=products.sort((a,b)=> (new Date(a.released)-new Date(b.released)) );
+ 
+  return result;
+
+}
+
+/** Calculate Quatile
+ * 
+ */
+
+const quantile = (arr, q) => {
+  const sorted = arr.sort((a, b) => a - b);
+  const pos = (sorted.length - 1) * q;
+  const base = Math.floor(pos);
+  const rest = pos - base;
+  if (sorted[base + 1] !== undefined) {
+      return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
+  } else {
+      return sorted[base];
+  }
+};
 
 /**
  * Declaration of all Listeners
@@ -245,23 +372,79 @@ selectBrand.addEventListener('change', async (event) => {
 selectRecent.addEventListener('change', async (event) => {
   
   const products = await fetchProducts(currentPagination.currentPage,currentPagination.count);
-
-  
   if(event.target.value == "Yes"){
 
-    products.result = bydate(products.result);
+    products.result = Filterbydate(products.result);
+   
+   
+    
     
   }
   else{
 
     const products = await fetchProducts();
   }
-
-
-
   setCurrentProducts(products);
   render(currentProducts, currentPagination);
 });
+
+
+/**
+ * Filter By price(Feature 4)
+ */
+selectReasonable.addEventListener('change', async (event) => {
+  
+  const products = await fetchProducts(currentPagination.currentPage,currentPagination.count);
+  if(event.target.value == "Yes"){
+
+    products.result = Filterbyprice(products.result);
+    
+  }
+  else{
+
+    const products = await fetchProducts();
+  }
+  setCurrentProducts(products);
+  render(currentProducts, currentPagination);
+});
+
+
+/**
+ * Sort by priceBy price (Feature 5)
+ */
+
+selectSort.addEventListener('change', async (event) => {
+  
+  const products = await fetchProducts(currentPagination.currentPage,currentPagination.count);
+
+  if(event.target.value =="price-asc"){
+
+    products.result = SortPricesA(products.result);
+  }
+    
+  else if(event.target.value == "price-desc"){
+
+    products.result =SortPricesD(products.result);
+    
+    
+  }
+
+  else if(event.target.value == "date-asc"){
+
+    products.result =SortDateR(products.result);
+    
+  }
+  else if(event.target.value == "date-desc"){
+
+    products.result =SortDateO(products.result);
+  }
+  setCurrentProducts(products);
+  render(currentProducts, currentPagination);
+});
+
+
+
+
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -269,13 +452,14 @@ document.addEventListener('DOMContentLoaded', async () => {
  
   const brands = await fetchbrand();
 
-  brands.result.unshift("Tous les produits");
+  brands.result.unshift("All the products");
 
   setCurrentProducts(products);
   setCurrentBrand(brands);
 
   renderBrands(brands);
   render(currentProducts, currentPagination);
+  
   
  ;
 });
