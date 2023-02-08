@@ -27,6 +27,7 @@ let currentBrands = [];
 const selectShow = document.querySelector('#show-select');
 const selectPage = document.querySelector('#page-select');
 const selectBrand = document.querySelector('#brand-select');
+const selectRecent= document.querySelector('#recently-released');
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
 
@@ -113,6 +114,8 @@ const renderProducts = products => {
         <span>${product.brand}</span>
         <a href="${product.link}">${product.name}</a>
         <span>${product.price}</span>
+        <span>${product.released}</span>
+
       </div>
     `;
     })
@@ -181,6 +184,22 @@ const bybrand = products =>{
   return result;
 }
 
+
+/**
+ * Sort by date
+ * @param  {Object} products
+ */
+
+const bydate= products =>{
+
+  const result=products.filter(product=> (((new Date()- new Date (product.released)) / (1000 * 3600 * 24 )) <30) );
+ 
+  return result;
+
+}
+
+
+
 /**
  * Declaration of all Listeners
  */
@@ -215,6 +234,30 @@ selectBrand.addEventListener('change', async (event) => {
   const products = await fetchProducts(currentPagination.currentPage,currentPagination.count);
   products.result = bybrand(products.result);
   console.log(products);
+
+  setCurrentProducts(products);
+  render(currentProducts, currentPagination);
+});
+
+/**
+ * Filter By date(Feature 3)
+ */
+selectRecent.addEventListener('change', async (event) => {
+  
+  const products = await fetchProducts(currentPagination.currentPage,currentPagination.count);
+
+  
+  if(event.target.value == "Yes"){
+
+    products.result = bydate(products.result);
+    
+  }
+  else{
+
+    const products = await fetchProducts();
+  }
+
+
 
   setCurrentProducts(products);
   render(currentProducts, currentPagination);
