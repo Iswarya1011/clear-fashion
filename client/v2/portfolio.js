@@ -22,14 +22,14 @@ let currentProducts = [];
 let currentPagination = {};
 let currentBrands = [];
 let allproduct=[];
-
+let page = document.querySelector('body');
 // indicators 
 
 var newprod;
 var Newdate;
-const p50=[];
-const p90=[];
-const p95=[];
+var p50;
+var p90;
+var p95;
 
 
 
@@ -49,6 +49,7 @@ const spanP95=document.querySelector('#p95');
 const spanRelease=document.querySelector('#releaseDate');
 const spanNbNewProducts = document.querySelector('#nbNewProducts');
 
+
 /**
  * Set global value
  * @param {Array} result - products to display
@@ -58,6 +59,9 @@ const setCurrentProducts = ({result, meta}) => {
   currentProducts = result;
   currentPagination = meta;
 };
+
+
+
 
 /**
  * Fetch products from api
@@ -93,6 +97,8 @@ const fetchProducts = async (page = 1, size = 12) => {
 const setCurrentBrand = (result) => {
   currentBrands = result;
 }
+
+
 
 /**
  * Fetch brands from api
@@ -261,9 +267,7 @@ const Filterbyprice= products =>{
 const SortPricesA= products =>{
 
   const result=products.sort((a,b)=> (parseFloat(a.price)-parseFloat(b.price)) );
-   p50=quantile(result.price,0.5);
-   p90=quantile(result.price,0.9);
-   p95=quantile(result.price,0.95);
+   
  
   return result;
 
@@ -276,9 +280,7 @@ const SortPricesA= products =>{
 const SortPricesD= products =>{
 
   const result=products.sort((a,b)=> (parseFloat(b.price)-parseFloat(a.price)) );
-   p50=quantile(result.price,0.5);
-   p90=quantile(result.price,0.9);
-   p95=quantile(result.price,0.95);
+   
  
   return result;
 
@@ -327,9 +329,14 @@ const quantile = (arr, q) => {
   }
 };
 
+
+
 /**
  * Declaration of all Listeners
  */
+
+
+
 
 /**
  * Select the number of products to display
@@ -361,7 +368,6 @@ selectBrand.addEventListener('change', async (event) => {
   const products = await fetchProducts(currentPagination.currentPage,currentPagination.count);
   products.result = bybrand(products.result);
   console.log(products);
-
   setCurrentProducts(products);
   render(currentProducts, currentPagination);
 });
@@ -372,6 +378,8 @@ selectBrand.addEventListener('change', async (event) => {
 selectRecent.addEventListener('change', async (event) => {
   
   const products = await fetchProducts(currentPagination.currentPage,currentPagination.count);
+
+  
   if(event.target.value == "Yes"){
 
     products.result = Filterbydate(products.result);
@@ -447,7 +455,10 @@ selectSort.addEventListener('change', async (event) => {
 
 
 
+
 document.addEventListener('DOMContentLoaded', async () => {
+
+
   const products = await fetchProducts();
  
   const brands = await fetchbrand();
