@@ -200,8 +200,8 @@ const renderBrands = brand => {
  const renderNewProduct = products => {
 
   
-  spanNbNewProducts.innerHTML=newprod;
-  spanRelease.innerHTML=Newdate;
+
+
   spanP50.innerHTML=p50;
   spanP90.innerHTML=p90;
   spanP95.innerHTML=p95;
@@ -230,17 +230,12 @@ const bybrand = products =>{
 }
 
 
-/**
- * Filter by date (recent)
- * @param  {Object} products
- */
+
 
 const Filterbydate= products =>{
 
   const result=products.filter(product=> (((new Date()- new Date (product.released)) / (1000 * 3600 * 24 )) <30) );
-
-  newprod=result.length
- 
+  // newprod=products.length;
   return result;
 
 }
@@ -318,7 +313,8 @@ const SortDateO= products =>{
  */
 
 const quantile = (arr, q) => {
-  const sorted = arr.sort((a, b) => a - b);
+
+  const sorted=arr.sort((a, b) => a - b)
   const pos = (sorted.length - 1) * q;
   const base = Math.floor(pos);
   const rest = pos - base;
@@ -463,6 +459,7 @@ document.addEventListener('DOMContentLoaded', async () => {
  
   const brands = await fetchbrand();
 
+
   brands.result.unshift("All the products");
 
   setCurrentProducts(products);
@@ -471,8 +468,35 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderBrands(brands);
   render(currentProducts, currentPagination);
   
+  const pro = await fetchProducts(currentPagination.currentPage,currentPagination.count);
   
- ;
+  spanNbNewProducts.innerHTML=pro.result.filter(product=> (((new Date()- new Date (product.released)) / (1000 * 3600 * 24 )) <30) ).length;
+ 
+
+  spanRelease.innerHTML= pro.result.sort((a,b)=> (new Date(b.released)-new Date(a.released)) )[0].released;
+
+
+  const price=[];
+ 
+
+  for(let step = 0; step < currentPagination.count; step++){
+
+    price.push(pro.result[step].price);
+
+  }
+  
+
+
+  console.log(price);
+  
+  
+  spanP50.innerHTML=quantile(price,0.50);
+  spanP90.innerHTML=quantile(price,0.90);
+  spanP95.innerHTML=quantile(price,0.95);
+
+
+  
+ 
 });
 
 
