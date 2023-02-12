@@ -21,15 +21,10 @@ Search for available brands list
 let currentProducts = [];
 let currentPagination = {};
 let currentBrands = [];
-let allproduct=[];
-let page = document.querySelector('body');
-// indicators 
 
-var newprod;
-var Newdate;
-var p50;
-var p90;
-var p95;
+
+let page = document.querySelector('body');
+
 
 
 
@@ -39,7 +34,8 @@ const selectPage = document.querySelector('#page-select');
 const selectBrand = document.querySelector('#brand-select');
 const selectRecent= document.querySelector('#recently-released');
 const selectReasonable= document.querySelector('#reasonable-price');
-const selectSort=document.querySelector('#sort-select')
+const selectSort=document.querySelector('#sort-select');
+const selectFavorite = document.querySelector('#fav-select');
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
 const spanbrands=document.querySelector('#nbBrands');
@@ -48,6 +44,7 @@ const spanP90=document.querySelector('#p90');
 const spanP95=document.querySelector('#p95');
 const spanRelease=document.querySelector('#releaseDate');
 const spanNbNewProducts = document.querySelector('#nbNewProducts');
+
 
 
 /**
@@ -139,7 +136,7 @@ const renderProducts = products => {
         <a href="${product.link}" target="_blank">${product.name}</a>
         <span>${product.price}</span>
         <span>${product.released}</span>
-
+        <input type="button" onclick="if(this.value=='Add favorite') { this.value='Remove favorite'; } else { this.value='Add favorite'; }" value="Add favorite" />
       </div>
     `;
     })
@@ -319,9 +316,9 @@ const quantile = (arr, q) => {
   const base = Math.floor(pos);
   const rest = pos - base;
   if (sorted[base + 1] !== undefined) {
-      return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
+      return Math.round(sorted[base] + rest * (sorted[base + 1] - sorted[base]));
   } else {
-      return sorted[base];
+      return Math.round(sorted[base]);
   }
 };
 
@@ -474,10 +471,7 @@ document.addEventListener('DOMContentLoaded', async () => {
  
 
   spanRelease.innerHTML= pro.result.sort((a,b)=> (new Date(b.released)-new Date(a.released)) )[0].released;
-
-
   const price=[];
- 
 
   for(let step = 0; step < currentPagination.count; step++){
 
@@ -485,10 +479,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   }
   
-
-
   console.log(price);
-  
   
   spanP50.innerHTML=quantile(price,0.50);
   spanP90.innerHTML=quantile(price,0.90);
