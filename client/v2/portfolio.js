@@ -136,7 +136,7 @@ const renderProducts = products => {
         <a href="${product.link}" target="_blank">${product.name}</a>
         <span>${product.price}</span>
         <span>${product.released}</span>
-        <input type="button" onclick="if(this.value=='Add favorite') { this.value='Remove favorite'; } else { this.value='Add favorite'; }" value="Add favorite" />
+        <input type="button" onclick="if(this.value=='Add favorite') { this.value='Remove favorite'; } else { this.value='Add favorite'; }" id="myButton${product.uuid}" />
       </div>
     `;
     })
@@ -190,30 +190,10 @@ const renderBrands = brand => {
   
 }
 
-/**
- * Render number of new product (Feature 8)
- *@param  {Array} products
- */
- const renderNewProduct = products => {
-
-  
-
-
-  spanP50.innerHTML=p50;
-  spanP90.innerHTML=p90;
-  spanP95.innerHTML=p95;
-  
-}
-
-
-
-
 const render = (products, pagination) => {
   renderProducts(products);
   renderPagination(pagination);
   renderIndicators(pagination);
-  renderNewProduct(products);
- 
 };
 
 /**
@@ -226,9 +206,10 @@ const bybrand = products =>{
   return result;
 }
 
-
-
-
+/**
+ * Filter by date
+ * @param  {Object} products
+ */
 const Filterbydate= products =>{
 
   const result=products.filter(product=> (((new Date()- new Date (product.released)) / (1000 * 3600 * 24 )) <30) );
@@ -322,14 +303,38 @@ const quantile = (arr, q) => {
   }
 };
 
+/** Favourite products
+ * @param  {Object} products
+ */
+
+function favorites(products){
+
+
+  for (let step = 0; step < currentPagination.count; step++)
+  {
+    if(document.getElementById("myButton"+products[step].uuid).value =="Added to favorite")
+    {
+    const result=step;
+
+    }
+  }
+
+  return result;
+}
+const fav= products =>{
+
+  const result=products.filter(a=> (document.getElementById("myButton"+ a.uuid).textContent !=null) );
+
+  return result;
+
+}
+
+
 
 
 /**
  * Declaration of all Listeners
  */
-
-
-
 
 /**
  * Select the number of products to display
@@ -411,7 +416,7 @@ selectReasonable.addEventListener('change', async (event) => {
 
 
 /**
- * Sort by priceBy price (Feature 5)
+ * Sort by price and date (Feature 5 & 6)
  */
 
 selectSort.addEventListener('change', async (event) => {
@@ -444,6 +449,26 @@ selectSort.addEventListener('change', async (event) => {
 });
 
 
+selectFavorite.addEventListener('change',async(event)=>{
+
+  const products = await fetchProducts(currentPagination.currentPage,currentPagination.count);
+
+  if(event.target.value == "Yes"){
+
+  console.log(products);
+   console.log(products.result[0].uuid);
+   console.log(document.getElementById("myButton"+products.result[0].uuid).textContent !=null)
+
+   products.result=fav(products.result);
+    
+    
+  }
+  
+
+  setCurrentProducts(products);
+  render(currentProducts, currentPagination);
+
+})
 
 
 
