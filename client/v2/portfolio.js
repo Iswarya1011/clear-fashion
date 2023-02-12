@@ -21,6 +21,7 @@ Search for available brands list
 let currentProducts = [];
 let currentPagination = {};
 let currentBrands = [];
+let favourite_brands=[];
 
 
 let page = document.querySelector('body');
@@ -136,7 +137,8 @@ const renderProducts = products => {
         <a href="${product.link}" target="_blank">${product.name}</a>
         <span>${product.price}</span>
         <span>${product.released}</span>
-        <input type="button" onclick="if(this.value=='Add favorite') { this.value='Remove favorite'; } else { this.value='Add favorite'; }" id="myButton${product.uuid}" />
+        <input id="myButton${product.uuid}" type="button" value="Add favorite" onclick="return change(this);" />
+        
       </div>
     `;
     })
@@ -307,23 +309,10 @@ const quantile = (arr, q) => {
  * @param  {Object} products
  */
 
-function favorites(products){
-
-
-  for (let step = 0; step < currentPagination.count; step++)
-  {
-    if(document.getElementById("myButton"+products[step].uuid).value =="Added to favorite")
-    {
-    const result=step;
-
-    }
-  }
-
-  return result;
-}
 const fav= products =>{
 
-  const result=products.filter(a=> (document.getElementById("myButton"+ a.uuid).textContent !=null) );
+  const result=products.filter(a=> (document.getElementById("myButton"+ a.uuid).value !="Add favorite") );
+  console.log(result);
 
   return result;
 
@@ -386,10 +375,7 @@ selectRecent.addEventListener('change', async (event) => {
     
     
   }
-  else{
-
-    const products = await fetchProducts();
-  }
+  
   setCurrentProducts(products);
   render(currentProducts, currentPagination);
 });
@@ -423,6 +409,8 @@ selectSort.addEventListener('change', async (event) => {
   
   const products = await fetchProducts(currentPagination.currentPage,currentPagination.count);
 
+
+
   if(event.target.value =="price-asc"){
 
     products.result = SortPricesA(products.result);
@@ -451,19 +439,16 @@ selectSort.addEventListener('change', async (event) => {
 
 selectFavorite.addEventListener('change',async(event)=>{
 
-  const products = await fetchProducts(currentPagination.currentPage,currentPagination.count);
+  const products = await fetchProducts(currentPagination.currentPage,currentPagination.pageSize);
 
   if(event.target.value == "Yes"){
 
-  console.log(products);
-   console.log(products.result[0].uuid);
-   console.log(document.getElementById("myButton"+products.result[0].uuid).textContent !=null)
-
    products.result=fav(products.result);
-    
-    
+
+
   }
-  
+
+ 
 
   setCurrentProducts(products);
   render(currentProducts, currentPagination);
