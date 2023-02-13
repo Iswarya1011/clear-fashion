@@ -1,47 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="style.css" type="text/css">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>👕 Clear Fahion | Environmentally & human-friendly clothes</title>
+    <title>👕 Clear Fashion | Environmentally & human-friendly clothes</title>
     
   </head>
   <body>
     <h1>Clear fashion</h1>
+    <img src="C:\Users\Utilisateur\OneDrive\Images\fashion.jpg" alt="Flowers in Chania" width="310" height="240" class="center">
+    <h2>Filters</h2>
     <section id="options">
-      <div id="show">
-        <label for="show-select">Show:</label>
-        <select name="show" id="show-select">
+      <div id="show" class="show">
+        <label for="show-select" >Show:</label>
+        <select name="show" id="show-select" class="select">
           <option value="12">12</option>
           <option value="24">24</option>
           <option value="48">48</option>
         </select>
       </div>
-      <div id="page">
+      <div id="page" class="show">
         <label for="page-select">Go to page:</label>
-        <select name="page" id="page-select"> </select>
+        <select name="page" id="page-select" class="select"> </select>
       </div>
-      <div id="filters">
+      <div id="filters" class="show">
         <label for="reasonable-price">By reasonable price :</label>
-        <select name="reasonable" id="reasonable-price">
+        <select name="reasonable" id="reasonable-price" class="select">
           <option value="No">NO</option>
           <option value="Yes">YES</option>
           
         </select>
+        <br>
         <label for="recently-released">By recently released :</label>
-        <select name="recent" id="recently-released">
+        <select name="recent" id="recently-released" class="select">
           <option value="No">NO</option>
           <option value="Yes">YES</option>
           
         </select>
        
-        <div id="brand">
+        <div id="brand" class="show">
           <label for="brand-select">By brands:</label>
-          <select name="brand" id="brand-select"> </select>
+          <select name="brand" id="brand-select" class="select"> </select>
         </div>
       </div>
-      <div id="sort">
+      <div id="sort" class="show">
         <label for="sort-select">Sort:</label>
-        <select name="sort" id="sort-select">
+        <select name="sort" id="sort-select" class="select">
           <option value="price-asc">Cheaper</option>
           <option value="price-desc">Expensive</option>
           <option value="date-asc">Recently released</option>
@@ -49,9 +53,9 @@
         </select>
       </div>
 
-      <div id="favorite">
+      <div id="favorite" class="show">
         <label for="fav-select">Show favourite products:</label>
-        <select name="favorite" id="fav-select"> 
+        <select name="favorite" id="fav-select"class="select" >
           <option value="No">NO</option>
           <option value="Yes">YES</option>
         </select>
@@ -59,32 +63,32 @@
       </div>
     </section>
     <section id="indicators">
-      <h2>Indicators</h2>
-      <div>
-        <span>Number of products</span>
+      <h3>Indicators</h3>
+      <div  class="show">
+        <span >Number of products</span>
         <span id="nbProducts">0</span>
       </div>
-      <div>
+      <div class="show">
         <span>Number of brands</span>
         <span id="nbBrands">0</span>
       </div>
-      <div>
+      <div class="show">
         <span>Number of new products</span>
         <span id="nbNewProducts">0</span>
       </div>
-      <div>
+      <div class="show">
         <span>p50 price value</span>
         <span id="p50">0</span>
       </div>
-      <div>
+      <div class="show">
         <span>p90 price value</span>
         <span id="p90">0</span>
       </div>
-      <div>
+      <div class="show">
         <span>p95 price value</span>
         <span id="p95">0</span>
       </div>
-      <div>
+      <div class="show">
         <span>Last released date</span>
         <span id="releaseDate">2020-01-01</span>
       </div>
@@ -92,15 +96,7 @@
     <section id="products"></section>
     
     <script type="text/javascript" charset="UTF-8" src="portfolio.js"></script>
-    <script type="text/javascript">
-      function change( el )
-      {
-          if ( el.value === "Add favorite" )
-              el.value = "Remove favorite";
-          else
-              el.value = "Add favorite";
-      }
-      </script>
+    
   
     
   </body>
