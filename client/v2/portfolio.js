@@ -121,7 +121,7 @@ const fetchbrand= async () => {
   }
 };
 
-
+  
 /**
  * Render list of products
  * @param  {Array} products
@@ -132,12 +132,19 @@ const renderProducts = products => {
   const template = products
     .map(product => {
       return `
-      <div class="product" id=${product.uuid}>
-        <span>${product.brand}</span>
+      <br>
+      <div class="product" id=${product.uuid} style="text-align: center">
+        
+        <img  src=${product.photo} alt="Not avaible" width="80" height="80">
+        <span style="text-transform:uppercase" >${product.brand}</span>
         <a href="${product.link}" target="_blank">${product.name}</a>
-        <span>${product.price}</span>
-        <span>${product.released}</span>
+        <br>
+        <span >Price: ${product.price}€</span>
+        <br>
+
+        <span>Released date:${product.released}</span>
         <input id="myButton${product.uuid}" type="button" value="Add favorite" onclick="return change(this);" />
+        
         
       </div>
     `;
@@ -149,6 +156,19 @@ const renderProducts = products => {
   sectionProducts.innerHTML = '<h2>Products</h2>';
   sectionProducts.appendChild(fragment);
 };
+
+/**
+ * 
+ * Function change the button onclick
+ */
+function change( el )
+      {
+          if ( el.value === "Add favorite" )
+              el.value = "Remove favorite";
+          else
+              el.value = "Add favorite";
+      }
+    
 
 /**
  * Render page selector
@@ -215,8 +235,10 @@ const bybrand = products =>{
 const Filterbydate= products =>{
 
   const result=products.filter(product=> (((new Date()- new Date (product.released)) / (1000 * 3600 * 24 )) <30) );
+
+  const ascresult=SortDateR(result);
   // newprod=products.length;
-  return result;
+  return ascresult;
 
 }
 
