@@ -33,10 +33,16 @@ h3 {
     font-size: large;
   }
   
+  .show2 {
+    color: rgb(92, 2, 77);
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+  }
 .select {
 
     text-align: center;
-    background:blueviolet;
+    background:rgb(142, 22, 255);
     border:1px solid white;
     color:white;
     width: auto;
@@ -44,6 +50,8 @@ h3 {
  
     
   }
+
+
 
 .product {
     
