@@ -12,12 +12,13 @@ const parse = data => {
   return $('.product-grid-container .grid__item')
     .map((i, element) => {
       const name = $(element)
-        .find('.full-unstyled-link')
+        .find('.card__heading')
         .text()
         .trim()
-        .replace(/\s/g, ' ');
-
-     const caracteristic = $(element)
+        .replace(/\s/g, '')
+        
+        ;
+      const caracteristic = $(element)
        .find('.card__characteristic')
        .text()
        .trim()
@@ -28,8 +29,6 @@ const parse = data => {
           .text().slice(1)
       
       );
-      
-
       
 
       return {name,caracteristic, price};
