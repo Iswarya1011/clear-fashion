@@ -9,10 +9,21 @@ const cheerio = require('cheerio');
 const parse = data => {
   const $ = cheerio.load(data);
 
-  return $('.products-list row .products-list__block products-list__block--grid')
+
+  return $('.js-product-list .product-miniature js-product-miniature h-100 position-relative')
     .map((i, element) => {
-      const name = 5
-      const price = 10
+      const name = $(element)
+        .find('.product-miniature__title')
+        .text()
+        .trim()
+        //.replace(/\s/g, ' ');
+
+      console.log(name);
+      const price = parseInt(
+        $(element)
+          .find('.product-miniature__pricing')
+          .text()
+      );
 
       
 
