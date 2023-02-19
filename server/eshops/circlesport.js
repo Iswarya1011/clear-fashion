@@ -24,9 +24,11 @@ const parse = data => {
        .replace(/\s/g, ' ');
       const price = parseInt(
         $(element)
-          .find('.card-information .money')
-          .text()
+          .find('.price__regular .money')
+          .text().slice(1)
+      
       );
+      
 
       
 
