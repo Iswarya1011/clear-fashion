@@ -18,6 +18,7 @@ const parse = data => {
         .replace(/\s/g, '')
         
         ;
+      name=name[name.lenghth/2];
       const caracteristic = $(element)
        .find('.card__characteristic')
        .text()
