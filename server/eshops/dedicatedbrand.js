@@ -15,12 +15,14 @@ const parse = data => {
         .find('.productList-title')
         .text()
         .trim()
-        .replace(/\s/g, ' ');
+        //.replace(/\s/g, ' ');
       const price = parseInt(
         $(element)
           .find('.productList-price')
           .text()
       );
+
+      
 
       return {name, price};
     })
@@ -49,4 +51,8 @@ module.exports.scrape = async url => {
     console.error(error);
     return null;
   }
+
+
 };
+
+
