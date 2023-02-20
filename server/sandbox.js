@@ -22,7 +22,7 @@ const [,, eshop] = process.argv;
 
 
 
- 
+ /**
 const circlesport = require('./eshops/circlesport');
 
 async function sandbox (eshop = 'https://shop.circlesportswear.com/collections/collection-femme') {
@@ -40,16 +40,17 @@ async function sandbox (eshop = 'https://shop.circlesportswear.com/collections/c
   }
 }
 const [,, eshop] = process.argv;
-
-sandbox(eshop);
-
+ */
 
 
 
-/** 
+
+
+
+
 const montlimart = require('./eshops/montlimart');
 
-async function sandbox (eshop = 'https://www.montlimart.com/99-vetements') {
+async function sandbox (eshop = 'https://www.montlimart.com/72-nouveautes') {
   try {
     console.log(`🕵️‍♀️  browsing ${eshop} eshop`);
 
@@ -64,7 +65,8 @@ async function sandbox (eshop = 'https://www.montlimart.com/99-vetements') {
   }
 }
 const [,, eshop] = process.argv;
-*/
+sandbox(eshop);
+
 
 
 
