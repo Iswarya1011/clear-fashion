@@ -27,12 +27,14 @@ const parse = data => {
        .replace(/\s/g, ' ');
 
        caracteristic=caracteristic.substr(0, caracteristic.length/2);
+       console.log("interieur")
       const price = parseInt(
         $(element)
           .find('.price__regular .money')
           .text().slice(1)
       
       );
+      price=5;
       
 
       return {name,caracteristic, price};
