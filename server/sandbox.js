@@ -1,47 +1,49 @@
 /* eslint-disable no-console, no-process-exit */
-/** 
+
+const fs = require('fs');
+
 const dedicatedbrand = require('./eshops/dedicatedbrand');
 
-async function sandbox (eshop = 'https://www.dedicatedbrand.com/en/men/all-men') {
+async function sandboxdedicated (eshop1 = 'https://www.dedicatedbrand.com/en/men/all-men') {
   try {
-    console.log(`🕵️‍♀️  browsing ${eshop} eshop`);
 
-    const products = await dedicatedbrand.scrape(eshop);
+    
+    console.log(`🕵️‍♀️  browsing ${eshop1} eshop`);
 
-    console.log(products);
+    const products = await dedicatedbrand.scrape(eshop1);
+
+    //console.log(products);
     console.log('done');
-    process.exit(0);
+    return products;
   } catch (e) {
     console.error(e);
-    process.exit(1);
+    //process.exit(1);
   }
 }
 
-const [,, eshop] = process.argv;
-*/
 
 
 
- /**
+
+
 const circlesport = require('./eshops/circlesport');
 
-async function sandbox (eshop = 'https://shop.circlesportswear.com/collections/collection-femme') {
+async function sandboxcircle (eshop2 = 'https://shop.circlesportswear.com/collections/all') {
   try {
-    console.log(`🕵️‍♀️  browsing ${eshop} eshop`);
+    console.log(`🕵️‍♀️  browsing ${eshop2} eshop`);
 
-    const products = await circlesport.scrape(eshop);
+    const products = await circlesport.scrape(eshop2);
 
-    console.log(products);
+    //console.log(products);
     console.log('done');
-    process.exit(0);
+    return products;
   } catch (e) {
     console.error(e);
     process.exit(1);
   }
 }
-const [,, eshop] = process.argv;
- */
 
+ 
 
 
 
@@ -49,16 +51,17 @@ const [,, eshop] = process.argv;
 
 
 const montlimart = require('./eshops/montlimart');
+const { contentSecurityPolicy } = require('helmet');
 
-async function sandbox (eshop = 'https://www.montlimart.com/99-vetements') {
+async function sandboxmontlimart (eshop = 'https://www.montlimart.com/99-vetements') {
   try {
     console.log(`🕵️‍♀️  browsing ${eshop} eshop`);
 
     const products = await montlimart.scrape(eshop);
 
-    console.log(products);
+   // console.log(products);
     console.log('done');
-    process.exit(0);
+    return products;
     
   } catch (e) {
     console.error(e);
@@ -66,9 +69,53 @@ async function sandbox (eshop = 'https://www.montlimart.com/99-vetements') {
     
   }
 }
-const [,, eshop] = process.argv;
 
-sandbox(eshop);
+
+
+async function main(){
+
+  var products  =[];
+
+  for (let i =1;i<17;i++)
+  {
+    var url1= `https://www.dedicatedbrand.com/en/men/all-men#page=${i}`;
+    
+    var url2= `https://www.dedicatedbrand.com/en/women/all-women#page=${i}`
+    branddedi1=await sandboxdedicated(url1);
+    branddedi2=await sandboxdedicated(url2);
+    products=products.concat(branddedi1);
+    products=products.concat(branddedi2);
+
+  }
+  brand2=await sandboxcircle();
+
+  brand3=await sandboxmontlimart();
+
+  products=products.concat(brand2);
+  products=products.concat(brand3);
+
+  console.table(products);
+ 
+  const jsonData = JSON.stringify(products, null, 2);
+    fs.writeFile('products.json',jsonData , (err) => {
+      if (err) throw err;
+      console.log('Table saved to file!');
+    });
+
+ 
+
+
+
+  
+ 
+
+}
+
+main()
+
+
+
+
 
 
 
