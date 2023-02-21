@@ -34,9 +34,18 @@ const parse = data => {
           .text().slice(1)
       
       );
-      
+      const brand='Circlesport';
+      var url=$(element)
+      .find('.full-unstyled-link')
+      .attr('href')
 
-      return {name,caracteristic, price};
+      url="https://shop.circlesportswear.com" +url;
+
+      const photo =$(element)
+      .find('img')
+      .attr('src');
+
+      return {name,caracteristic, price,url,brand,photo};
     })
     .get();
 };
