@@ -22,9 +22,22 @@ const parse = data => {
           .text()
       );
 
+      const brand='Dedicated';
+
+      var url=$(element)
+      .find(".productList-link")
+      .attr('href')
+
+      url='https://www.dedicatedbrand.com'+url;
+
+
+      const photo=$(element)
+      .find('img')
+      .attr('data-src');
+
       
 
-      return {name, price};
+      return {name, price,url,brand,photo};
     })
     .get();
 };
