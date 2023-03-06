@@ -21,11 +21,6 @@ async function sandboxdedicated (eshop1 = 'https://www.dedicatedbrand.com/en/men
   }
 }
 
-
-
-
-
-
 const circlesport = require('./eshops/circlesport');
 
 async function sandboxcircle (eshop2 = 'https://shop.circlesportswear.com/collections/all') {
@@ -42,12 +37,6 @@ async function sandboxcircle (eshop2 = 'https://shop.circlesportswear.com/collec
     process.exit(1);
   }
 }
-
- 
-
-
-
-
 
 
 const montlimart = require('./eshops/montlimart');
@@ -69,8 +58,6 @@ async function sandboxmontlimart (eshop = 'https://www.montlimart.com/99-vetemen
     
   }
 }
-
-
 
 async function main(){
 
@@ -101,13 +88,6 @@ async function main(){
       if (err) throw err;
       console.log('Table saved to file!');
     });
-
- 
-
-
-
-  
- 
 
 }
 
