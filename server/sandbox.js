@@ -84,7 +84,7 @@ async function main(){
   console.table(products);
  
   const jsonData = JSON.stringify(products, null, 2);
-    fs.writeFile('products.json',jsonData , (err) => {
+    fs.writeFile('product_list.json',jsonData , (err) => {
       if (err) throw err;
       console.log('Table saved to file!');
     });
