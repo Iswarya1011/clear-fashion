@@ -78,9 +78,9 @@ async function main(){
 
   for (let i =1;i<17;i++)
   {
-    var url1= `https://www.dedicatedbrand.com/en/men/all-men#page=${i}`;
+    var url1= `https://www.dedicatedbrand.com/en/men/all-men?p=${i}`;
     
-    var url2= `https://www.dedicatedbrand.com/en/women/all-women#page=${i}`
+    var url2= `https://www.dedicatedbrand.com/en/women/all-women?p=${i}`
     branddedi1=await sandboxdedicated(url1);
     branddedi2=await sandboxdedicated(url2);
     products=products.concat(branddedi1);
