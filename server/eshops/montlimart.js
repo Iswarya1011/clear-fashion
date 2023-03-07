@@ -34,9 +34,10 @@ const parse = data => {
       const photo=$(element)
       .find('img')
       .attr('data-src');
+      const date = '2023-03-07'
 
 
-      return {name, price,brand,url,photo};
+      return {name, price,brand,url,photo,date};
     })
     .get();
 };
