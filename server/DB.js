@@ -11,7 +11,10 @@ async function main(){
     const products=require('./product_list.json');
     const collection=db.collection('products');
     const result=await collection.insertMany(products);
+ 
     client.close();
+    
+
 
 
 }
@@ -24,8 +27,10 @@ async function brands(brand){
     const produ = await collection.find({brand}).toArray();;
     
     console.log(produ);
-
+    return collection;
     client.close();
+
+
 
 }
 
@@ -87,14 +92,14 @@ async function newdate()
 
 
 }
-//brands('Circlesport');
+brands('Circlesport');
 //lessthan(100);
 
 //sortprice();
 
 //sortdate();
 
-newdate();
+//newdate();
 
 //main();
 
