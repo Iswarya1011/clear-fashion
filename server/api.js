@@ -25,11 +25,15 @@ app.options('*', cors());
 
 app.get('/', async(request, response) => {
 
+  response.send({'ack':true});
+  /*
   const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
   const db = client.db(MONGODB_DB_NAME);
   const collection = db.collection('products');
   const products = await collection.find().array();
   response.send(products);
+  */
+
 });
 
 app.listen(PORT);
