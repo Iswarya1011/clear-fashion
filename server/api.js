@@ -23,8 +23,13 @@ app.use(helmet());
 
 app.options('*', cors());
 
-app.get('/', (request, response) => {
-  response.send({'ack': true});
+app.get('/', async(request, response) => {
+
+  const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
+  const db = client.db(MONGODB_DB_NAME);
+  const collection = db.collection('products');
+  const products = await collection.find().toArray();
+  response.send(products);
 });
 
 app.listen(PORT);
