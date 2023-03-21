@@ -58,6 +58,7 @@ async function getProducts(limit, brand , price) {
   return products;
 }
 
+
 app.get('/products/search', async (request, response) => {
   const limit = parseInt(request.query.limit) || 12;
   const brand = request.query.brand || null;
@@ -66,6 +67,16 @@ app.get('/products/search', async (request, response) => {
   const products = await getProducts(limit, brand, price);
   response.json(products); 
 });
+
+app.get('/brands', async(request,response)=>{
+
+  const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
+  const db = client.db(MONGODB_DB_NAME);
+  const collection = db.collection('products');
+  const produ = await collection.distinct('brand');
+
+  response.send(produ);
+})
 
 app.get('/products/:id', async(request, response) => {
 
