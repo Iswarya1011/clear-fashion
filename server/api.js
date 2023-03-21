@@ -30,7 +30,7 @@ app.get('/', async(request, response) => {
   const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
   const db = client.db(MONGODB_DB_NAME);
   const collection = db.collection('products');
-  const products = await collection.find().array();
+  const products = await collection.find();
   response.send(products);
   
 
