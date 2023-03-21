@@ -70,7 +70,7 @@ const setCurrentProducts = ({result, meta}) => {
 const fetchProducts = async (page = 1, size = 12) => {
   try {
     const response = await fetch(
-      `https://clear-fashions.vercel.app/?page=${page}&size=${size}`
+      `https://clear-fashion-api.vercel.app?page=${page}&size=${size}`
     );
     const body = await response.json();
 
@@ -105,7 +105,7 @@ const setCurrentBrand = (result) => {
 const fetchbrand= async () => {
   try {
     const response = await fetch(
-      `https://clear-fashions.vercel.app/brands`
+      `https://clear-fashion-api.vercel.app/brands`
     );
     const body = await response.json();
 
@@ -133,17 +133,17 @@ const renderProducts = products => {
     .map(product => {
       return `
       <br>
-      <div class="product" id=${product.uuid} style="text-align: center">
+      <div class="product" id=${product._id} style="text-align: center">
         
         <img  src=${product.photo} alt="Not avaible" width="80" height="80">
         <span style="text-transform:uppercase" >${product.brand}</span>
-        <a href="${product.link}" target="_blank">${product.name}</a>
+        <a href="${product.url}" target="_blank">${product.name}</a>
         <br>
         <span >Price: ${product.price}€</span>
         <br>
 
-        <span>Released date:${product.released}</span>
-        <input id="myButton${product.uuid}" type="button" value="Add favorite" onclick="return change(this);" />
+        <span>Released date:${product.date}</span>
+        <input id="myButton${product._id}" type="button" value="Add favorite" onclick="return change(this);" />
         
         
       </div>
