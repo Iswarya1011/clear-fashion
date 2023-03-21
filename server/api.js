@@ -45,7 +45,7 @@ async function getProducts(limit, brand , price) {
   const db = client.db(MONGODB_DB_NAME);
   const collection = db.collection('products');
 
-  const query = {};
+  let query = {};
   if (brand) {
     query.brand = brand;
   }
@@ -59,12 +59,12 @@ async function getProducts(limit, brand , price) {
 }
 
 app.get('/products/search', async (request, response) => {
-  const limit = request.query.limit || 12;
+  const limit = parseInt(request.query.limit) || 12;
   const brand = request.query.brand || null;
   const price = request.query.price || null;
 
   const products = await getProducts(limit, brand, price);
-  response.send(products); 
+  response.json(products); 
 });
 
 app.get('/products/:id', async(request, response) => {
