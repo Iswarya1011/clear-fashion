@@ -42,10 +42,11 @@ app.get('/products', async (req, res) => {
   const page = parseInt(req.query.page || 1);
   const size = parseInt(req.query.count || 12);
 
+
   const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
   const db = client.db(MONGODB_DB_NAME);
   const collection = db.collection('products');
-  const products = await collection.find({}).skip((page - 1) * count).limit(count).toArray();
+  const products = await collection.find({}).skip((page - 1) * size).limit(size).toArray();
 
   res.json({success: true, data: products});
 });
