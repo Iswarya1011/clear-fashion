@@ -36,6 +36,20 @@ app.get('/', async(request, response) => {
 
 });
 
+
+
+app.get('/products', async (req, res) => {
+  const page = parseInt(req.query.page || 1);
+  const size = parseInt(req.query.count || 12);
+
+  const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
+  const db = client.db(MONGODB_DB_NAME);
+  const collection = db.collection('products');
+  const products = await collection.find({}).skip((page - 1) * count).limit(count).toArray();
+
+  res.json({success: true, data: products});
+});
+
 app.listen(PORT);
 
 console.log(`📡 Running on port ${PORT}`);
@@ -86,6 +100,10 @@ app.get('/brands', async(request,response)=>{
 
   response.send(produ);
 })
+
+
+
+
 
 app.get('/products/:id', async(request, response) => {
 
