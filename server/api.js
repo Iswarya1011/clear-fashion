@@ -40,7 +40,7 @@ app.get('/', async(request, response) => {
 
 app.get('/products', async (req, res) => {
   const page = parseInt(req.query.page || 1);
-  const size = parseInt(req.query.count || 12);
+  const size = parseInt(req.query.size || 12);
 
 
   const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
