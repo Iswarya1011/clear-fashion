@@ -48,7 +48,7 @@ app.get('/products', async (req, res) => {
   const collection = db.collection('products');
   const products = await collection.find({}).skip((page - 1) * size).limit(size).toArray();
 
-  res.json({success: true, data: products});
+  res.send(products);
 });
 
 app.listen(PORT);
