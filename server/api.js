@@ -37,7 +37,7 @@ app.get('/', async(request, response) => {
 });
 
 
-
+/*
 app.get('/products', async (req, res) => {
   const page = parseInt(req.query.page || 1);
   const size = parseInt(req.query.size || 12);
@@ -51,6 +51,7 @@ app.get('/products', async (req, res) => {
   res.send(products);
 });
 
+*/
 app.listen(PORT);
 
 console.log(`📡 Running on port ${PORT}`);
@@ -64,6 +65,7 @@ async function ID(id){
   return produ;
 }
 
+/*
 async function getProducts(limit, brand , price) {
   const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
   const db = client.db(MONGODB_DB_NAME);
@@ -81,8 +83,60 @@ async function getProducts(limit, brand , price) {
 
   return products;
 }
+*/
+
+async function getProducts(size, brand, price, page) {
+  const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
+  const db = client.db(MONGODB_DB_NAME);
+  const collection = db.collection('products');
+  
+  let query = {};
+  if (brand) {
+    query.brand = brand;
+  }
+  if (price) {
+    query.price = { $lte: parseInt(price) };
+  }
+
+  const products = await collection.find(query).sort({ price: 1 }).skip((page - 1) * size).limit(size).toArray();
+
+  return products;
+}
+
+app.get('/products', async (req, res) => {
+  const page = parseInt(req.query.page || 1);
+  const size = parseInt(req.query.size || 12);
+  const brand = req.query.brand || null;
+  const price = req.query.price || null;
+
+  const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
+  const db = client.db(MONGODB_DB_NAME);
+  const collection = db.collection('products');
+  
+  let query = {};
+  if (brand) {
+    query.brand = brand;
+  }
+  if (price) {
+    query.price = { $lte: parseInt(price) };
+  }
+
+  const totalProducts = await collection.countDocuments(query);
+  const totalPages = Math.ceil(totalProducts / size);
+  
+  const products = await getProducts(size, brand, price, page);
+
+  res.send({
+    products,
+    totalPages,
+    currentPage: page,
+    totalProducts,
+  });
+});
 
 
+
+/*
 app.get('/products/search', async (request, response) => {
   const limit = parseInt(request.query.limit) || 12;
   const brand = request.query.brand || null;
@@ -91,6 +145,7 @@ app.get('/products/search', async (request, response) => {
   const products = await getProducts(limit, brand, price);
   response.json(products); 
 });
+*/
 
 app.get('/brands', async(request,response)=>{
 
