@@ -1,5 +1,5 @@
 const {MongoClient} = require('mongodb');
-const MONGODB_URI = 'mongodb+srv://iswarya:1234@cluster0.evj6cag.mongodb.net/?retryWrites=true&w=majority';
+const MONGODB_URI = 'mongodb+srv://iswarya:1234@cluster0.tl2d0db.mongodb.net/?retryWrites=true&w=majority';
 const MONGODB_DB_NAME = 'clearfashion';
 
 
@@ -92,7 +92,7 @@ async function newdate()
 
 
 }
-brands('Circlesport');
+//brands('Circlesport');
 //lessthan(100);
 
 //sortprice();
@@ -101,5 +101,5 @@ brands('Circlesport');
 
 //newdate();
 
-//main();
+main();
 
