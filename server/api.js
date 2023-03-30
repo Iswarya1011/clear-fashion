@@ -3,7 +3,7 @@ const cors = require('cors');
 const express = require('express');
 const helmet = require('helmet');
 const {MongoClient} = require('mongodb');
-const MONGODB_URI = 'mongodb+srv://iswarya:1234@cluster0.evj6cag.mongodb.net/?retryWrites=true&w=majority';
+const MONGODB_URI = 'mongodb+srv://iswarya:1234@cluster0.tl2d0db.mongodb.net/?retryWrites=true&w=majority';
 const MONGODB_DB_NAME = 'clearfashion';
 
 var ObjectId=require('mongodb').ObjectId;
