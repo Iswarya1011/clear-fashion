@@ -85,7 +85,7 @@ async function getProducts(limit, brand , price) {
 }
 */
 
-async function getProducts(size, brand, price, page,sort,date) {
+async function getProducts(size, brand, price, page,sort) {
   const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
   const db = client.db(MONGODB_DB_NAME);
   const collection = db.collection('products');
@@ -108,11 +108,11 @@ async function getProducts(size, brand, price, page,sort,date) {
     sortquery.price = -1;
   }
 
-  if (date === 'asc') {
+  if (sort === 'old') {
    
     sortquery.date = 1;
   }
-  if (date === 'desc') {
+  if (sort === 'new') {
     
     sortquery.date = -1;
   }
@@ -128,7 +128,6 @@ app.get('/products', async (req, res) => {
   const brand = req.query.brand || null;
   const price = req.query.price || null;
   const sort=req.query.sort|| null;
-  const date=req.query.date || null;
   let query = {};
 
   const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
@@ -148,7 +147,7 @@ app.get('/products', async (req, res) => {
   const totalProducts = await collection.countDocuments(query);
   const totalPages = Math.ceil(totalProducts / size);
   
-  const products = await getProducts(size, brand, price, page,sort,date);
+  const products = await getProducts(size, brand, price, page,sort);
 
  
 
