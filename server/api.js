@@ -118,7 +118,7 @@ app.get('/products', async (req, res) => {
   const size = parseInt(req.query.size || 12);
   const brand = req.query.brand || null;
   const price = req.query.price || null;
-  const sort=req.query.sort;
+  const sort=req.query.sort||'asc';
   let query = {};
 
   const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
@@ -138,16 +138,9 @@ app.get('/products', async (req, res) => {
   const totalProducts = await collection.countDocuments(query);
   const totalPages = Math.ceil(totalProducts / size);
   
-  const products = await getProducts(size, brand, price, page);
+  const products = await getProducts(size, brand, price, page,sort);
 
-  if (sort === 'asc') {
-   
-    products.sort((a, b) => a.price - b.price);
-  }
-  if (sort === 'desc') {
-    
-    products.sort((a, b) => b.price - a.price);
-  }
+ 
 
   res.send({
     products,
