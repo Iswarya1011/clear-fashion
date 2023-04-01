@@ -133,17 +133,17 @@ const renderProducts = products => {
     .map(product => {
       return `
       <br>
-      <div class="product" id=${product._id} style="text-align: center">
+      <div class="product" id=${product.uuid} style="text-align: center">
         
         <img  src=${product.photo} alt="Not avaible" width="80" height="80">
         <span style="text-transform:uppercase" >${product.brand}</span>
-        <a href="${product.url}" target="_blank">${product.name}</a>
+        <a href="${product.link}" target="_blank">${product.name}</a>
         <br>
         <span >Price: ${product.price}€</span>
         <br>
 
-        <span>Released date:${product.date}</span>
-        <input id="myButton${product._id}" type="button" value="Add favorite" onclick="return change(this);" />
+        <span>Released date:${product.released}</span>
+        <input id="myButton${product.uuid}" type="button" value="Add favorite" onclick="return change(this);" />
         
         
       </div>
