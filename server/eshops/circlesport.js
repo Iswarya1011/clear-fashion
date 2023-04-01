@@ -41,11 +41,13 @@ const parse = data => {
 
       url="https://shop.circlesportswear.com" +url;
 
-      const photo =$(element)
+      var photo="https:"
+      
+       photo =photo + $(element)
       .find('img')
       .attr('src');
 
-      const date= '2023-02-10'
+      const date= '2023-03-30'
 
       return {name,caracteristic, price,url,brand,photo,date};
     })
