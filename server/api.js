@@ -37,21 +37,7 @@ app.get('/', async(request, response) => {
 });
 
 
-/*
-app.get('/products', async (req, res) => {
-  const page = parseInt(req.query.page || 1);
-  const size = parseInt(req.query.size || 12);
 
-
-  const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
-  const db = client.db(MONGODB_DB_NAME);
-  const collection = db.collection('products');
-  const products = await collection.find({}).skip((page - 1) * size).limit(size).toArray();
-
-  res.send(products);
-});
-
-*/
 app.listen(PORT);
 
 console.log(`📡 Running on port ${PORT}`);
@@ -65,8 +51,8 @@ async function ID(id){
   return produ;
 }
 
-/*
-async function getProducts(limit, brand , price) {
+
+async function gettingProducts(limit, brand , price) {
   const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
   const db = client.db(MONGODB_DB_NAME);
   const collection = db.collection('products');
@@ -83,7 +69,7 @@ async function getProducts(limit, brand , price) {
 
   return products;
 }
-*/
+
 
 async function getProducts(size, brand, price, page,sort) {
   const client = await MongoClient.connect(MONGODB_URI, { 'useNewUrlParser': true });
@@ -161,16 +147,16 @@ app.get('/products', async (req, res) => {
 
 
 
-/*
+
 app.get('/products/search', async (request, response) => {
   const limit = parseInt(request.query.limit) || 12;
   const brand = request.query.brand || null;
   const price = request.query.price || null;
 
-  const products = await getProducts(limit, brand, price);
+  const products = await gettingProducts(limit, brand, price);
   response.json(products); 
 });
-*/
+
 
 app.get('/brands', async(request,response)=>{
 
